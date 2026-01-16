@@ -1,10 +1,9 @@
 run = ["npm", "run", "dev"]
 hidden = [".config", "package-lock.json"]
-modules = ["nodejs-20", "web", "nix"]
 
 [deployment]
 publicDir = "public"
 ignorePorts = false
 
 [nix]
-channel = "stable-25_05"
+channel = "stable-22_11"
