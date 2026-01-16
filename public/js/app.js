@@ -25,6 +25,11 @@ class IncomeOS {
       const data = JSON.parse(cached);
       this.earnings = data.earnings || this.earnings;
       this.platformEarnings = data.platformEarnings || this.platformEarnings;
+      
+      // Calculate missing weekly/total if they weren't saved correctly
+      const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
+      if (this.earnings.total === 0) this.earnings.total = totalFromPlatforms;
+      if (this.earnings.week === 0) this.earnings.week = this.earnings.today;
     }
     this.updateUI();
     
