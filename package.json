@@ -1,0 +1,24 @@
+{
+  "name": "incomeos-universal",
+  "version": "1.0.0",
+  "description": "Free global earnings platform - deploys from Replit",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd public && python3 -m http.server 3000 & cd .. && echo '🚀 PWA running on http://localhost:3000'",
+    "compile": "npx hardhat compile",
+    "deploy:testnet": "npx hardhat run scripts/deploy.js --network amoy",
+    "deploy:mainnet": "echo '⚠️  Requires real MATIC. Use testnet first!' && exit 1"
+  },
+  "keywords": ["pwa", "blockchain", "income", "web3"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.3.1",
+    "hardhat": "^2.19.0"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
