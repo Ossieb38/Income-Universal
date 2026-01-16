@@ -1,6 +1,6 @@
 run = ["npm", "run", "dev"]
 hidden = [".config", "package-lock.json"]
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "python-3.11"]
 
 [deployment]
 publicDir = "public"
