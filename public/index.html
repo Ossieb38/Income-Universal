@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IncomeOS - Free Global Earnings</title>
+  <meta name="description" content="Earn globally. Cash out anywhere. Zero cost to start.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#004aad">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>🌍 IncomeOS</h1>
+      <div class="wallet-status" id="walletStatus">
+        <button class="btn-connect" onclick="web3Manager.connectWallet()">Connect Wallet</button>
+      </div>
+    </header>
+    
+    <section class="dashboard">
+      <div class="card">
+        <h2>Today's Earnings</h2>
+        <p class="amount" id="todayEarnings">$0.00</p>
+      </div>
+      <div class="card">
+        <h2>This Week</h2>
+        <p class="amount" id="weekEarnings">$0.00</p>
+      </div>
+      <div class="card">
+        <h2>Total Balance</h2>
+        <p class="amount" id="totalBalance">$0.00</p>
+      </div>
+    </section>
+    
+    <section class="tasks">
+      <h2>⚡ Active Tasks</h2>
+      <div id="taskList">
+        <p class="empty">Connect wallet and start earning!</p>
+      </div>
+      <button class="btn-primary" id="startTasks" onclick="startAutoTasks()">Start Auto Tasks</button>
+    </section>
+    
+    <section class="platforms">
+      <h2>🔗 Connected Platforms</h2>
+      <div class="platform-grid">
+        <div class="platform-card" data-platform="honeygain">
+          <h3>🍯 Honeygain</h3>
+          <p class="status">🔴 Offline</p>
+          <p class="earnings">$0.00</p>
+        </div>
+        <div class="platform-card" data-platform="sahara">
+          <h3>🤖 Sahara AI</h3>
+          <p class="status">🔴 Offline</p>
+          <p class="earnings">0 USDC</p>
+        </div>
+        <div class="platform-card" data-platform="synesis">
+          <h3>🧠 Synesis One</h3>
+          <p class="status">🔴 Offline</p>
+          <p class="earnings">0 SNS</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="payout">
+      <button class="btn-secondary" id="payoutBtn" onclick="initiatePayout()">Cash Out</button>
+      <select id="payoutMethod">
+        <option value="auto">🎯 Auto-select best method</option>
+        <option value="crypto">₿ Cryptocurrency</option>
+        <option value="fiat">🏦 Bank Transfer</option>
+      </select>
+    </section>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="js/web3.js"></script>
+  <script src="js/app.js"></script>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('✅ Service Worker registered'))
+        .catch(err => console.log('❌ Service Worker registration failed:', err));
+    }
+  </script>
+</body>
+</html>
