@@ -1,0 +1,9 @@
+run = ["npm", "run", "dev"]
+hidden = [".config", "package-lock.json"]
+
+[deployment]
+publicDir = "public"
+ignorePorts = false
+
+[nix]
+channel = "stable-22_11"
