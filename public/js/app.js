@@ -57,6 +57,10 @@ class IncomeOS {
     // Total balance should always match the sum of platform earnings
     this.earnings.total = totalFromPlatforms;
     
+    // Ensure all balances are synced correctly
+    this.earnings.week = Math.max(this.earnings.week, this.earnings.today);
+    this.earnings.total = Math.max(this.earnings.total, this.earnings.week);
+    
     localStorage.setItem('incomeos-earnings', JSON.stringify({
       earnings: this.earnings,
       platformEarnings: this.platformEarnings
