@@ -1,6 +1,6 @@
 run = ["npm", "run", "dev"]
 hidden = [".config", "package-lock.json"]
-modules = ["nodejs-20"]
+modules = ["nodejs-20", "python-3.11"]
 
 [deployment]
 publicDir = "public"
@@ -8,3 +8,34 @@ ignorePorts = false
 
 [nix]
 channel = "stable-22_11"
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "PWA Server"
+
+[[workflows.workflow]]
+name = "PWA Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd public && python3 -m http.server 5000"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
