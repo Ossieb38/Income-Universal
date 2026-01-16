@@ -9,12 +9,14 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   color: #333;
+  transition: all 0.3s ease;
 }
 
 .app {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  perspective: 1000px;
 }
 
 .header {
@@ -23,84 +25,172 @@ body {
   align-items: center;
   margin-bottom: 30px;
   color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .header h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.header h1:hover {
+  transform: scale(1.05) translateZ(20px);
 }
 
 .btn-connect {
   background: #00d4ff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px 24px;
+  border-radius: 25px;
   color: white;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-connect:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+  background: #33e0ff;
 }
 
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 25px;
   margin-bottom: 40px;
 }
 
 .card {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  background: white;
 }
 
 .card h2 {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .amount {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #667eea;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .btn-primary, .btn-secondary {
   width: 100%;
-  padding: 15px;
+  padding: 18px;
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
+  border-radius: 15px;
+  font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 15px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .btn-primary {
-  background: #00d4ff;
+  background: linear-gradient(135deg, #00d4ff 0%, #00a3ff 100%);
   color: white;
 }
 
+.btn-primary:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+}
+
 .btn-secondary {
-  background: #28a745;
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
   color: white;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
 }
 
 .platform-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
 }
 
 .platform-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 18px;
   text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.platform-card:hover {
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  z-index: 10;
+  background: white;
 }
 
 .platform-card h3 {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+}
+
+.status {
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.earnings {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #764ba2;
+}
+
+section h2 {
+  color: white;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.payout {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+#payoutMethod {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: white;
+  margin-top: 15px;
+  font-weight: 500;
 }
