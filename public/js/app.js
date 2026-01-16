@@ -41,9 +41,16 @@ class IncomeOS {
     const increment = Math.random() * 0.05;
     
     this.platformEarnings[randomPlatform] += increment;
+    
+    // Recalculate totals from individual platform earnings to ensure accuracy
+    const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
+    
+    // Update daily/weekly logic - in this demo they just increment
     this.earnings.today += increment;
     this.earnings.week += increment;
-    this.earnings.total += increment;
+    
+    // Total balance should always match the sum of platform earnings
+    this.earnings.total = totalFromPlatforms;
     
     localStorage.setItem('incomeos-earnings', JSON.stringify({
       earnings: this.earnings,
