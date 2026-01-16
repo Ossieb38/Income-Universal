@@ -10,7 +10,11 @@ class IncomeOS {
       sahara: 0,
       synesis: 0,
       pawnos: 0,
-      grass: 0
+      grass: 0,
+      swagbucks: 0,
+      surveyjunkie: 0,
+      brandaid: 0,
+      opinioninn: 0
     };
   }
   
@@ -32,7 +36,7 @@ class IncomeOS {
     console.log('📊 Syncing earnings...');
     
     // Simulate real-time generation from different platforms
-    const platforms = ['honeygain', 'sahara', 'synesis', 'pawnos', 'grass'];
+    const platforms = ['honeygain', 'sahara', 'synesis', 'pawnos', 'grass', 'swagbucks', 'surveyjunkie', 'brandaid', 'opinioninn'];
     const randomPlatform = platforms[Math.floor(Math.random() * platforms.length)];
     const increment = Math.random() * 0.05;
     
