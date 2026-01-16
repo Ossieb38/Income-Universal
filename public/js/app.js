@@ -50,11 +50,16 @@ class IncomeOS {
     // Recalculate totals from individual platform earnings to ensure accuracy
     const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
     
-    // Update daily/weekly logic - in this demo they just increment
+    // Update daily/weekly logic
+    // We update all trackers based on the increment
     this.earnings.today += increment;
     this.earnings.week += increment;
     
     // Total balance should always match the sum of platform earnings
+    this.earnings.total = totalFromPlatforms;
+    
+    // Ensure "This Week" and "Total Balance" reflect the sum of individual day's earnings (simulated here)
+    this.earnings.week = totalFromPlatforms;
     this.earnings.total = totalFromPlatforms;
     
     // Ensure all balances are synced correctly
