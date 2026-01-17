@@ -16,6 +16,7 @@ class IncomeOS {
       brandaid: 0,
       opinioninn: 0
     };
+    this.totalAccumulated = 0;
   }
   
   async init() {
@@ -25,10 +26,12 @@ class IncomeOS {
       const data = JSON.parse(cached);
       this.earnings = data.earnings || this.earnings;
       this.platformEarnings = data.platformEarnings || this.platformEarnings;
+      this.totalAccumulated = data.totalAccumulated || 0;
       
       // Calculate missing weekly/total if they weren't saved correctly
       const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
       if (this.earnings.total === 0) this.earnings.total = totalFromPlatforms;
+      if (this.totalAccumulated === 0) this.totalAccumulated = totalFromPlatforms;
       if (this.earnings.week === 0) this.earnings.week = this.earnings.today;
     }
     this.updateUI();
@@ -46,29 +49,22 @@ class IncomeOS {
     const increment = Math.random() * 0.05;
     
     this.platformEarnings[randomPlatform] += increment;
-    
-    // Recalculate totals from individual platform earnings to ensure accuracy
-    const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
+    this.totalAccumulated += increment;
     
     // Update daily/weekly logic
-    // We update all trackers based on the increment
     this.earnings.today += increment;
     this.earnings.week += increment;
     
-    // Total balance should always match the sum of platform earnings
-    this.earnings.total = totalFromPlatforms;
-    
-    // Ensure "This Week" and "Total Balance" reflect the sum of individual day's earnings (simulated here)
-    this.earnings.week = totalFromPlatforms;
-    this.earnings.total = totalFromPlatforms;
+    // Total balance should always reflect the accumulated amount for each task
+    this.earnings.total = this.totalAccumulated;
     
     // Ensure all balances are synced correctly
     this.earnings.week = Math.max(this.earnings.week, this.earnings.today);
-    this.earnings.total = Math.max(this.earnings.total, this.earnings.week);
     
     localStorage.setItem('incomeos-earnings', JSON.stringify({
       earnings: this.earnings,
-      platformEarnings: this.platformEarnings
+      platformEarnings: this.platformEarnings,
+      totalAccumulated: this.totalAccumulated
     }));
     
     this.updateUI(randomPlatform);
