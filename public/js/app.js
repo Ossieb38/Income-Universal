@@ -38,6 +38,64 @@ class IncomeOS {
     
     // Auto-sync every 5 seconds for real-time feel in demo
     setInterval(() => this.syncEarnings(), 5000);
+
+    this.setupAIChat();
+  }
+
+  setupAIChat() {
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    const addMessage = (text, isUser = false) => {
+      const msg = document.createElement('div');
+      msg.className = `message ${isUser ? 'user' : 'ai'}`;
+      msg.textContent = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const sendMessage = async () => {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, true);
+      chatInput.value = '';
+
+      try {
+        const response = await fetch('/api/conversations/1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: text })
+        });
+        
+        // Handle SSE response
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai';
+        chatMessages.appendChild(aiMsg);
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = JSON.parse(line.slice(6));
+              if (data.content) aiMsg.textContent += data.content;
+            }
+          }
+        }
+      } catch (err) {
+        console.error('AI Error:', err);
+        addMessage('Sorry, I encountered an error.');
+      }
+    };
+
+    sendBtn?.addEventListener('click', sendMessage);
+    chatInput?.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
   }
   
   async syncEarnings() {

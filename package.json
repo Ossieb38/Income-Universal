@@ -2,23 +2,46 @@
   "name": "incomeos-universal",
   "version": "1.0.0",
   "description": "Free global earnings platform - deploys from Replit",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "dev": "cd public && python3 -m http.server 3000 & cd .. && echo '🚀 PWA running on http://localhost:3000'",
+    "dev": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' ts-node index.ts",
+    "db:push": "drizzle-kit push",
     "compile": "npx hardhat compile",
     "deploy:testnet": "npx hardhat run scripts/deploy.js --network amoy",
     "deploy:mainnet": "echo '⚠️  Requires real MATIC. Use testnet first!' && exit 1"
   },
-  "keywords": ["pwa", "blockchain", "income", "web3"],
+  "keywords": [
+    "pwa",
+    "blockchain",
+    "income",
+    "web3"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/contracts": "^5.0.0",
     "dotenv": "^16.3.1",
-    "hardhat": "^2.19.0"
+    "hardhat": "^2.19.0",
+    "drizzle-kit": "^0.30.5"
   },
   "dependencies": {
-    "ethers": "^5.7.2"
-  }
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.9",
+    "@types/pg": "^8.16.0",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
+    "ethers": "^5.7.2",
+    "express": "^5.2.1",
+    "openai": "^6.16.0",
+    "p-limit": "^7.2.0",
+    "p-retry": "^7.1.1",
+    "pg": "^8.17.1",
+    "postgres": "^3.4.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "zod": "^4.3.5",
+    "zod-validation-error": "^5.0.0"
+  },
+  "type": "module"
 }
