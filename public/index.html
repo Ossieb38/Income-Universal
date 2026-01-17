@@ -45,10 +45,42 @@
     
     <section class="platforms">
       <h2>🔗 Connected Platforms</h2>
+      <button class="btn-secondary" onclick="document.getElementById('settingsModal').style.display='block'">⚙️ Platform Settings</button>
       <div class="platform-grid">
         <!-- ... existing platform cards ... -->
       </div>
     </section>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="document.getElementById('settingsModal').style.display='none'">&times;</span>
+        <h2>Platform API Keys</h2>
+        <div id="apiSettingsForm">
+          <div class="setting-item">
+            <label>Honeygain API Key:</label>
+            <input type="password" id="key_honeygain" placeholder="Enter Honeygain Key">
+          </div>
+          <div class="setting-item">
+            <label>Sahara AI API Key:</label>
+            <input type="password" id="key_sahara" placeholder="Enter Sahara Key">
+          </div>
+          <div class="setting-item">
+            <label>Synesis API Key:</label>
+            <input type="password" id="key_synesis" placeholder="Enter Synesis Key">
+          </div>
+          <div class="setting-item">
+            <label>Pawns.app API Key:</label>
+            <input type="password" id="key_pawnos" placeholder="Enter Pawns.app Key">
+          </div>
+          <div class="setting-item">
+            <label>Grass API Key:</label>
+            <input type="password" id="key_grass" placeholder="Enter Grass Key">
+          </div>
+          <button class="btn-primary" onclick="app.saveAPIKeys()">Save Keys</button>
+        </div>
+      </div>
+    </div>
 
     <section class="ai-chat">
       <h2>💬 AI Assistant</h2>

@@ -17,29 +17,71 @@ class IncomeOS {
       opinioninn: 0
     };
     this.totalAccumulated = 0;
+    this.tasksRunning = false;
+    this.apiKeys = {};
   }
   
   async init() {
-    // Load cached data (Persistence is critical: do not reset earnings)
+    // Load cached data
     const cached = localStorage.getItem('incomeos-earnings');
     if (cached) {
       const data = JSON.parse(cached);
       this.earnings = data.earnings || this.earnings;
       this.platformEarnings = data.platformEarnings || this.platformEarnings;
       this.totalAccumulated = data.totalAccumulated || 0;
+      this.apiKeys = data.apiKeys || {};
       
-      // Calculate missing weekly/total if they weren't saved correctly
-      const totalFromPlatforms = Object.values(this.platformEarnings).reduce((a, b) => a + b, 0);
-      if (this.earnings.total === 0) this.earnings.total = totalFromPlatforms;
-      if (this.totalAccumulated === 0) this.totalAccumulated = totalFromPlatforms;
-      if (this.earnings.week === 0) this.earnings.week = this.earnings.today;
+      // Load keys into form
+      for (const [platform, key] of Object.entries(this.apiKeys)) {
+        const input = document.getElementById(`key_${platform}`);
+        if (input) input.value = key;
+      }
     }
     this.updateUI();
     
-    // Auto-sync every 5 seconds for real-time feel in demo
-    setInterval(() => this.syncEarnings(), 5000);
+    // Auto-sync every 5 seconds only if tasks are running
+    setInterval(() => {
+      if (this.tasksRunning) this.syncEarnings();
+    }, 5000);
 
     this.setupAIChat();
+  }
+
+  saveAPIKeys() {
+    const platforms = ['honeygain', 'sahara', 'synesis', 'pawnos', 'grass'];
+    platforms.forEach(p => {
+      const val = document.getElementById(`key_${p}`)?.value;
+      if (val) this.apiKeys[p] = val;
+    });
+    
+    localStorage.setItem('incomeos-earnings', JSON.stringify({
+      earnings: this.earnings,
+      platformEarnings: this.platformEarnings,
+      totalAccumulated: this.totalAccumulated,
+      apiKeys: this.apiKeys
+    }));
+    
+    document.getElementById('settingsModal').style.display = 'none';
+    alert('✅ API Keys saved successfully!');
+  }
+
+  toggleTasks() {
+    if (!this.tasksRunning) {
+      const hasKeys = Object.keys(this.apiKeys).length > 0;
+      if (!hasKeys) {
+        alert('⚠️ Please configure at least one API key in Platform Settings first!');
+        return;
+      }
+      this.tasksRunning = true;
+      document.getElementById('startTasks').textContent = 'Stop Auto Tasks';
+      document.getElementById('startTasks').classList.replace('btn-primary', 'btn-secondary');
+      alert('🚀 Auto-tasks started! Syncing with platforms...');
+    } else {
+      this.tasksRunning = false;
+      document.getElementById('startTasks').textContent = 'Start Auto Tasks';
+      document.getElementById('startTasks').classList.replace('btn-secondary', 'btn-primary');
+      alert('⏹️ Auto-tasks stopped.');
+    }
   }
 
   setupAIChat() {
@@ -179,7 +221,7 @@ const app = new IncomeOS();
 app.init();
 
 function startAutoTasks() {
-  alert('🚀 Auto-tasks would start here. Connect platforms in settings first!');
+  app.toggleTasks();
 }
 
 function initiatePayout() {
