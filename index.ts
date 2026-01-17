@@ -1,7 +1,7 @@
 import express from "express";
-import { registerChatRoutes } from "./server/replit_integrations/chat/index.js";
-import { registerImageRoutes } from "./server/replit_integrations/image/index.js";
-import { registerAudioRoutes } from "./server/replit_integrations/audio/index.js";
+import { registerChatRoutes } from "./server/replit_integrations/chat/routes.ts";
+import { registerImageRoutes } from "./server/replit_integrations/image/routes.ts";
+import { registerAudioRoutes } from "./server/replit_integrations/audio/routes.ts";
 import path from "path";
 import { fileURLToPath } from "url";
 
