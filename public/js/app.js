@@ -20,7 +20,7 @@ class IncomeOS {
   }
   
   async init() {
-    // Load cached data
+    // Load cached data (Persistence is critical: do not reset earnings)
     const cached = localStorage.getItem('incomeos-earnings');
     if (cached) {
       const data = JSON.parse(cached);
